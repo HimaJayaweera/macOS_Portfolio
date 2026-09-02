@@ -27,6 +27,7 @@ npm install
 - `src/App.jsx` — top-level layout: `Navbar`, `Welcome`, `Dock`.
 - `src/components/` — UI components, re-exported via `src/components/index.js`.
 - `src/constants/index.js` — static content: nav links/icons, dock apps, blog posts, tech stack, socials, gallery, Finder `locations` (Work/About/Resume/Trash), and `WINDOW_CONFIG`.
+- `src/store/window.js` — Zustand (+ immer) store for window state (`windows`, keyed by app id), with `openWindow`/`closeWindow`/`focusWindow` actions. Seeded from `WINDOW_CONFIG`.
 - `src/index.css` — global styles (Tailwind).
 
 ## Path aliases (`vite.config.js`)
@@ -41,10 +42,10 @@ Import through these instead of relative `../../` paths, e.g. `import Dock from 
 
 ## Known gaps
 
-See `progress.md` for the live list. As of 2026-09-01:
+See `progress.md` for the live list. As of 2026-09-02:
 
-- `Dock`'s `toggleApp` is a no-op stub — clicking a dock icon does nothing.
-- `react-tooltip` data attributes on dock icons have no corresponding library/component installed yet.
+- `toggleApp` updates the window store, but no component renders windows yet, so clicking a dock icon has no visible effect.
+- `WINDOW_CONFIG` has no `trash` key — fine while `trash`'s `canOpen: false`, but would throw if trash ever becomes openable without adding it first.
 
 ## Git
 

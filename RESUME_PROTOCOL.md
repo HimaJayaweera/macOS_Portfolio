@@ -29,6 +29,13 @@ Whenever this file changes, `README.md` must be updated in the same pass to refl
 - [ ] Update `runbook.md` if commands, scripts, or setup steps changed.
 - [ ] If this file changed, update `README.md` to match (see Update rule above).
 
+## Debugging runtime errors
+
+When asked to fix "the error shown on X", first check whether browser tooling (e.g. Claude in Chrome) is available this session:
+
+- If it is, use it to reproduce and read the actual console error before touching code.
+- If it isn't (declined or unavailable), `npm run lint` and `npm run build`/`vite build` only catch static/syntax issues, not runtime ones. Do not guess at a runtime error from a diff alone — ask the user to paste the exact error text/stack trace before making speculative fixes.
+
 ## Ownership notes
 
 - Git add/commit/push are handled manually by the user. Never run git write commands (`git add`, `git commit`, `git push`, etc.) unless explicitly asked to in that conversation.
