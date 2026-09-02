@@ -23,3 +23,4 @@ Living log of what's been done and what's next. Update at the end of every sessi
 ## Decisions
 
 - Git add/commit/push is done manually by the user — do not run git write commands unless explicitly asked.
+- 2026-09-01: `RESUME_PROTOCOL.md`, `progress.md`, `runbook.md` stay tracked in git, not gitignored — gitignoring would break cross-session/cross-machine continuity and leave `README.md`'s links dangling on a fresh clone.

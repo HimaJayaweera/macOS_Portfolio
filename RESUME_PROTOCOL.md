@@ -33,3 +33,4 @@ Whenever this file changes, `README.md` must be updated in the same pass to refl
 
 - Git add/commit/push are handled manually by the user. Never run git write commands (`git add`, `git commit`, `git push`, etc.) unless explicitly asked to in that conversation.
 - `progress.md`, `runbook.md`, and this file are living documents — keep them current rather than accurate-as-of-creation.
+- `RESUME_PROTOCOL.md`, `progress.md`, and `runbook.md` are deliberately **not** gitignored (decided 2026-09-01). Gitignoring them would defeat their purpose — cross-session/cross-machine continuity — since a fresh clone would be missing them, and `README.md` links to all three. Don't re-add them to `.gitignore` without raising this tradeoff again.
