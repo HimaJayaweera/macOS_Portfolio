@@ -46,6 +46,12 @@ Twice so far (`Dock.jsx`'s dock icons, then `Terminal.jsx`'s tech-stack list), a
 
 When debugging "X isn't showing up" / "list is empty" with no console error, grep the relevant component's `.map()` calls first and check each has either an implicit return (`=> ( ... )`) or an explicit `return` inside its block body, before looking elsewhere.
 
+## Known gotcha: gsap subpath imports must match exact file casing
+
+gsap's `package.json` `exports` map resolves subpath imports (e.g. `gsap/draggable`) to a file glob (`"./*": "./*.js"`) without normalizing case. On Windows' case-insensitive filesystem, a wrongly-cased import like `gsap/draggable` still resolves at runtime (the real file is `Draggable.js`), but Vite's esbuild dependency optimizer treats the differently-cased specifier as a distinct module — this produced `[ERROR] Two output files share the same path but have different contents: ...gsap_draggable.js` (fixed 2026-09-04, see `progress.md`).
+
+When importing any gsap plugin subpath (`Draggable`, `ScrollTrigger`, `Flip`, etc.), match the exact casing of the file under `node_modules/gsap/` — e.g. `gsap/Draggable`, not `gsap/draggable`. If a similar "two output files share the same path" or unexplained dep-optimizer error shows up again, check import casing against the actual file on disk first, and clear `node_modules/.vite` after fixing it.
+
 ## Ownership notes
 
 - Git add/commit/push are handled manually by the user. Never run git write commands (`git add`, `git commit`, `git push`, etc.) unless explicitly asked to in that conversation.

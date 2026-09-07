@@ -2,13 +2,15 @@
 
 Living log of what's been done and what's next. Update at the end of every session — see `RESUME_PROTOCOL.md`.
 
-## Current state (2026-09-02)
+## Current state (2026-09-04)
 
-- Base layout in place: `App.jsx` renders `Navbar`, `Welcome`, `Dock`.
-- `Dock.jsx`: renders icons from `dockApps` (`src/constants/index.js`) with a GSAP-driven magnification effect on hover (`useGSAP` + `gsap.to`, scale/lift falloff based on cursor distance from each icon's center).
-- `toggleApp` now calls into a real window store (`src/store/window.js`, Zustand + immer) — clicking an openable dock icon opens/closes/focuses its window via `openWindow`/`closeWindow`. No window UI components consume this state yet, so nothing visibly opens.
+- Base layout in place: `App.jsx` renders `Navbar`, `Welcome`, `Dock`, plus two window components: `Terminal` and `Safari`.
+- `Dock.jsx`: renders icons from `dockApps` (`src/constants/index.js`) with a GSAP-driven magnification effect on hover (`useGSAP` + `gsap.to`, scale/lift falloff based on cursor distance from each icon's center). `toggleApp` opens/closes windows via the window store.
+- `src/hoc/windowWrapper.jsx` now does real work, not just a static wrapper: it shows/hides the window (`display` toggled via `useLayoutEffect` on `isOpen`), animates it in with GSAP (`gsap.fromTo` scale/opacity/y) when it opens, and makes it draggable via `Draggable.create`. The drag instance is meant to call `focusWindow` on press to raise z-index, but see the open item below.
+- `src/components/WindowControls.jsx` (new): the traffic-light-style close/minimize/maximize dots rendered in each window's header; `close` is wired to `closeWindow(target)`, minimize/maximize are still visual-only.
+- `src/windows/Terminal.jsx` and `src/windows/Safari.jsx` are the two window content components so far — Terminal shows `techStack`, Safari shows `blogPosts` as a blog list. Both are wrapped via `windowWrapper(Component, windowKey)`.
 - Tooltips are wired up: `react-tooltip` was added as a dependency and a `<Tooltip id="dock-tooltip" />` is rendered in `Dock.jsx`, so the existing `data-tooltip-*` attributes on dock icons work.
-- `constants/index.js` defines `locations` (Work/About/Resume/Trash content trees) and `WINDOW_CONFIG` (consumed by the new window store), but no window components read from `locations` yet.
+- `constants/index.js` defines `locations` (Work/About/Resume/Trash content trees) and `WINDOW_CONFIG` (consumed by the window store), but no window component reads from `locations` yet (Finder/Work/About/Resume/Trash windows aren't built).
 - Documentation set up: `RESUME_PROTOCOL.md`, `progress.md` (this file), `runbook.md`, and `README.md`.
 
 ## Fixed
@@ -23,7 +25,7 @@ Living log of what's been done and what's next. Update at the end of every sessi
 
 ## Next steps
 
-- Build window UI components that open/close based on `windowStore` state and render content from `locations` (Finder/Work, About, Resume, Trash).
+- Build the remaining window UI components that render content from `locations` (Finder/Work, About, Resume, Trash) — Terminal and Safari are done, those are not.
 - `WINDOW_CONFIG` still has no `trash` entry. No longer a crash risk (see defensive pass above), but if trash becomes openable, add a matching `WINDOW_CONFIG.trash` entry so it actually works.
 
 ## Decisions
