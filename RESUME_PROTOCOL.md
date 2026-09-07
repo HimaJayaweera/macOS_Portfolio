@@ -29,12 +29,22 @@ Whenever this file changes, `README.md` must be updated in the same pass to refl
 - [ ] Update `runbook.md` if commands, scripts, or setup steps changed.
 - [ ] If this file changed, update `README.md` to match (see Update rule above).
 
+## progress.md logging rule
+
+Only log an issue in `progress.md`'s "Fixed" section once it is actually fixed. Do not add "found but not yet fixed" notes — they go stale as the code moves on and can end up describing a problem that no longer exists. If something is found but left alone (out of scope, user said to leave it, etc.), mention it in conversation, not in `progress.md`; add the entry only when it's later fixed.
+
 ## Debugging runtime errors
 
 When asked to fix "the error shown on X", first check whether browser tooling (e.g. Claude in Chrome) is available this session:
 
 - If it is, use it to reproduce and read the actual console error before touching code.
 - If it isn't (declined or unavailable), `npm run lint` and `npm run build`/`vite build` only catch static/syntax issues, not runtime ones. Do not guess at a runtime error from a diff alone — ask the user to paste the exact error text/stack trace before making speculative fixes.
+
+## Known recurring bug pattern: `.map()` with a block body and no `return`
+
+Twice so far (`Dock.jsx`'s dock icons, then `Terminal.jsx`'s tech-stack list), a `.map()` callback was written with a block body (`{ ... }`) but no `return` statement, so it silently produced `undefined` for every item and the section rendered empty — no error, no console output, just nothing on screen.
+
+When debugging "X isn't showing up" / "list is empty" with no console error, grep the relevant component's `.map()` calls first and check each has either an implicit return (`=> ( ... )`) or an explicit `return` inside its block body, before looking elsewhere.
 
 ## Ownership notes
 
