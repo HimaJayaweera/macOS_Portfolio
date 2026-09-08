@@ -12,12 +12,14 @@
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "@tailwindcss/vite": "^4.1.17",
+    "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
     "gsap": "^3.14.2",
     "immer": "^11.1.18",
     "lucide-react": "^0.562.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-pdf": "^10.5.0",
     "react-tooltip": "^6.0.8",
     "tailwindcss": "^4.1.17",
     "zustand": "^5.0.15"
