@@ -356,6 +356,22 @@ body {
         h2 {
             @apply font-bold text-sm text-center w-full;
         }
+
+        .textfile {
+            @apply px-6 py-5 space-y-4;
+
+            img {
+                @apply rounded-md object-cover w-full;
+            }
+
+            .subtitle {
+                @apply text-sm font-semibold text-gray-900;
+            }
+
+            p {
+                @apply text-sm text-gray-700 leading-relaxed;
+            }
+        }
     }
 
     #imgfile {

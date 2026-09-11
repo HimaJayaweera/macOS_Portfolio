@@ -24,11 +24,13 @@ npm install
 
 ## Project structure
 
-- `src/App.jsx` — top-level layout: `Navbar`, `Welcome`, `Dock`.
+- `src/App.jsx` — top-level layout: `Navbar`, `Welcome`, `Dock`, plus the window components (`Terminal`, `Safari`, `Resume`, `Finder`, `TextFile`, `ImageFile`, `Contact`).
 - `src/components/` — UI components, re-exported via `src/components/index.js`.
+- `src/windows/` — window content components, each wrapped via `windowWrapper(Component, windowKey)` and re-exported via `src/windows/index.js`. `Finder.jsx` browses `locations`; `Text.jsx` (windowKey `txtfile`) and `ImageFile.jsx` (windowKey `imgfile`) are generic content-file viewers driven by `windows[key].data`.
 - `src/constants/index.js` — static content: nav links/icons, dock apps, blog posts, tech stack, socials, gallery, Finder `locations` (Work/About/Resume/Trash), and `WINDOW_CONFIG`.
 - `src/store/window.js` — Zustand (+ immer) store for window state (`windows`, keyed by app id), with `openWindow`/`closeWindow`/`focusWindow` actions. Seeded from `WINDOW_CONFIG`.
-- `src/index.css` — global styles (Tailwind).
+- `src/store/location.js` — Zustand (+ immer) store for Finder navigation (`activeLocation`, defaulting to `locations.work`), with `setActiveLocation`/`resetActiveLocation` actions.
+- `src/index.css` — global styles (Tailwind), including per-window `#windowKey { ... }` blocks (e.g. `#finder`, `#txtfile`, `#imgfile`, `#contact`).
 
 ## Path aliases (`vite.config.js`)
 
@@ -42,9 +44,9 @@ Import through these instead of relative `../../` paths, e.g. `import Dock from 
 
 ## Known gaps
 
-See `progress.md` for the live list. As of 2026-09-02:
+See `progress.md` for the live list. As of 2026-09-11:
 
-- `toggleApp` updates the window store, but no component renders windows yet, so clicking a dock icon has no visible effect.
+- `dockApps`'s `photos` entry is `canOpen: true` and `WINDOW_CONFIG.photos` exists, but no `Photos` window component exists/is rendered in `App.jsx` — clicking "Gallery" has no visible effect.
 - `WINDOW_CONFIG` has no `trash` key — fine while `trash`'s `canOpen: false`, but would throw if trash ever becomes openable without adding it first.
 
 ## Git
