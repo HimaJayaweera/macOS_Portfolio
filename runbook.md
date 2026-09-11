@@ -24,9 +24,9 @@ npm install
 
 ## Project structure
 
-- `src/App.jsx` — top-level layout: `Navbar`, `Welcome`, `Dock`, plus the window components (`Terminal`, `Safari`, `Resume`, `Finder`, `TextFile`, `ImageFile`, `Contact`).
-- `src/components/` — UI components, re-exported via `src/components/index.js`.
-- `src/windows/` — window content components, each wrapped via `windowWrapper(Component, windowKey)` and re-exported via `src/windows/index.js`. `Finder.jsx` browses `locations`; `Text.jsx` (windowKey `txtfile`) and `ImageFile.jsx` (windowKey `imgfile`) are generic content-file viewers driven by `windows[key].data`.
+- `src/App.jsx` — top-level layout: `Navbar`, `Welcome`, `Dock`, `Home`, plus the window components (`Terminal`, `Safari`, `Resume`, `Finder`, `TextFile`, `ImageFile`, `Contact`, `Photo`).
+- `src/components/` — UI components, re-exported via `src/components/index.js`. Includes `Home.jsx`, the desktop project-folder icons (not a window).
+- `src/windows/` — window content components, each wrapped via `windowWrapper(Component, windowKey)` and re-exported via `src/windows/index.js`. `Finder.jsx` browses `locations`; `Text.jsx` (windowKey `txtfile`) and `ImageFile.jsx` (windowKey `imgfile`) are generic content-file viewers driven by `windows[key].data`; `Photo.jsx` (windowKey `photos`) is a gallery grid that opens `ImageFile` as a separate window per thumbnail click.
 - `src/constants/index.js` — static content: nav links/icons, dock apps, blog posts, tech stack, socials, gallery, Finder `locations` (Work/About/Resume/Trash), and `WINDOW_CONFIG`.
 - `src/store/window.js` — Zustand (+ immer) store for window state (`windows`, keyed by app id), with `openWindow`/`closeWindow`/`focusWindow` actions. Seeded from `WINDOW_CONFIG`.
 - `src/store/location.js` — Zustand (+ immer) store for Finder navigation (`activeLocation`, defaulting to `locations.work`), with `setActiveLocation`/`resetActiveLocation` actions.
@@ -46,7 +46,6 @@ Import through these instead of relative `../../` paths, e.g. `import Dock from 
 
 See `progress.md` for the live list. As of 2026-09-11:
 
-- `dockApps`'s `photos` entry is `canOpen: true` and `WINDOW_CONFIG.photos` exists, but no `Photos` window component exists/is rendered in `App.jsx` — clicking "Gallery" has no visible effect.
 - `WINDOW_CONFIG` has no `trash` key — fine while `trash`'s `canOpen: false`, but would throw if trash ever becomes openable without adding it first.
 
 ## Git

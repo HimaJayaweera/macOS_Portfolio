@@ -239,6 +239,10 @@ body {
     #photos {
         @apply max-w-3xl absolute top-96 left-1/2 -translate-y-1/2 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
 
+        #window-header h2 {
+            @apply font-bold text-sm text-center flex-1;
+        }
+
         .sidebar {
             @apply w-3/12 flex-none bg-gray-50 border-r border-gray-200 flex flex-col p-5;
 
@@ -272,8 +276,10 @@ body {
                 @apply grid grid-cols-5 grid-rows-5 gap-2.5;
 
                 li {
+                    @apply cursor-pointer overflow-hidden rounded-lg;
+
                     img {
-                        @apply size-full object-cover rounded-lg;
+                        @apply size-full object-cover rounded-lg transition-transform duration-300 hover:scale-105;
                     }
 
                     &:first-child {
